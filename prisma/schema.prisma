@@ -1,0 +1,55 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Brand {
+  intBrandID   Int       @id @default(autoincrement()) @map(name: "Brand ID")
+  txtBrandName String    @map(name: "Brand Name") @db.VarChar(255)
+  products     Product[]
+  dtInserted   DateTime  @default(now()) @map(name: "Date Inserted")
+  dtUpdated    DateTime  @default(now()) @map(name: "Date updated")
+
+  @@map("brand")
+}
+
+model Product {
+  intProductID   Int      @id @default(autoincrement()) @map(name: "Product ID")
+  txtProductCode String   @map(name: "Product Code") @db.VarChar(255)
+  txtProductName String   @map(name: "Product Name") @db.VarChar(255)
+  intBrandID     Int      @map(name: "Brand ID")
+  brand          Brand    @relation(fields: [intBrandID], references: [intBrandID])
+  dtInserted     DateTime @default(now()) @map(name: "Date Inserted")
+  dtUpdated      DateTime @default(now()) @map(name: "Date updated")
+
+  @@map("product")
+}
+
+model Customer {
+  intCustomerID      Int      @id @default(autoincrement()) @map(name: "Customer ID")
+  txtCustomerName    String   @map(name: "Customer Name") @db.VarChar(255)
+  txtCustomerAddress String   @map(name: "Customer Address") @db.VarChar(255)
+  bitGender          Int      @map(name: "Gender")
+  dtInserted         DateTime @default(now()) @map(name: "Date Inserted")
+  dtUpdated          DateTime @default(now()) @map(name: "Date updated")
+
+  @@map("customer")
+}
+
+model Pembelian {
+  intSalesOrderID Int      @id @default(autoincrement()) @map(name: "SO ID")
+  intCustomerID   Int      @map(name: "Customer Name")
+  intProductID    Int      @map(name: "Product Name")
+  intQty          Float    @map(name: "Quantity")
+  dtSalesOrder    DateTime @default(now()) @map(name: "Date Inserted")
+  dtUpdated       DateTime @default(now()) @map(name: "Date updated")
+
+  @@map("pembelian")
+}

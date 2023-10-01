@@ -2,7 +2,12 @@ import { prismaClient } from "@/service/database";
 import { Pembelian } from "@prisma/client";
 
 const get = async () => {
-  const result = await prismaClient.pembelian.findMany();
+  const result = await prismaClient.pembelian.findMany({
+    include: {
+      customer: true,
+      product: true,
+    },
+  });
 
   return result;
 };

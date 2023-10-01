@@ -21,24 +21,26 @@ model Brand {
 }
 
 model Product {
-  intProductID   Int      @id @default(autoincrement()) @map(name: "Product ID")
-  txtProductCode String   @map(name: "Product Code") @db.VarChar(255)
-  txtProductName String   @map(name: "Product Name") @db.VarChar(255)
-  intBrandID     Int      @map(name: "Brand ID")
-  brand          Brand    @relation(fields: [intBrandID], references: [intBrandID])
-  dtInserted     DateTime @default(now()) @map(name: "Date Inserted")
-  dtUpdated      DateTime @default(now()) @map(name: "Date updated")
+  intProductID   Int         @id @default(autoincrement()) @map(name: "Product ID")
+  txtProductCode String      @map(name: "Product Code") @db.VarChar(255)
+  txtProductName String      @map(name: "Product Name") @db.VarChar(255)
+  intBrandID     Int         @map(name: "Brand ID")
+  brand          Brand       @relation(fields: [intBrandID], references: [intBrandID])
+  Pembelian      Pembelian[]
+  dtInserted     DateTime    @default(now()) @map(name: "Date Inserted")
+  dtUpdated      DateTime    @default(now()) @map(name: "Date updated")
 
   @@map("product")
 }
 
 model Customer {
-  intCustomerID      Int      @id @default(autoincrement()) @map(name: "Customer ID")
-  txtCustomerName    String   @map(name: "Customer Name") @db.VarChar(255)
-  txtCustomerAddress String   @map(name: "Customer Address") @db.VarChar(255)
-  bitGender          Int      @map(name: "Gender")
-  dtInserted         DateTime @default(now()) @map(name: "Date Inserted")
-  dtUpdated          DateTime @default(now()) @map(name: "Date updated")
+  intCustomerID      Int         @id @default(autoincrement()) @map(name: "Customer ID")
+  txtCustomerName    String      @map(name: "Customer Name") @db.VarChar(255)
+  txtCustomerAddress String      @map(name: "Customer Address") @db.VarChar(255)
+  bitGender          Int         @map(name: "Gender")
+  dtInserted         DateTime    @default(now()) @map(name: "Date Inserted")
+  dtUpdated          DateTime    @default(now()) @map(name: "Date updated")
+  Pembelian          Pembelian[]
 
   @@map("customer")
 }
@@ -46,7 +48,9 @@ model Customer {
 model Pembelian {
   intSalesOrderID Int      @id @default(autoincrement()) @map(name: "SO ID")
   intCustomerID   Int      @map(name: "Customer Name")
-  intProductID    Int      @map(name: "Product Name")
+  customer        Customer @relation(fields: [intCustomerID], references: [intCustomerID])
+  intProductID    Int      @map(name: "Product ID")
+  product         Product  @relation(fields: [intProductID], references: [intProductID])
   intQty          Float    @map(name: "Quantity")
   dtSalesOrder    DateTime @default(now()) @map(name: "Date Inserted")
   dtUpdated       DateTime @default(now()) @map(name: "Date updated")

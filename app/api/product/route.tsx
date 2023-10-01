@@ -6,7 +6,6 @@ import { NextResponse } from "next/server";
 export async function GET() {
   try {
     const result = await productService.get();
-
     return NextResponse.json(
       {
         code: 200,

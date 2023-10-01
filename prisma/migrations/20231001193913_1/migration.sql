@@ -36,7 +36,7 @@ CREATE TABLE `customer` (
 CREATE TABLE `pembelian` (
     `SO ID` INTEGER NOT NULL AUTO_INCREMENT,
     `Customer Name` INTEGER NOT NULL,
-    `Product Name` INTEGER NOT NULL,
+    `Product ID` INTEGER NOT NULL,
     `Quantity` DOUBLE NOT NULL,
     `Date Inserted` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `Date updated` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
@@ -46,3 +46,9 @@ CREATE TABLE `pembelian` (
 
 -- AddForeignKey
 ALTER TABLE `product` ADD CONSTRAINT `product_Brand ID_fkey` FOREIGN KEY (`Brand ID`) REFERENCES `brand`(`Brand ID`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `pembelian` ADD CONSTRAINT `pembelian_Customer Name_fkey` FOREIGN KEY (`Customer Name`) REFERENCES `customer`(`Customer ID`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `pembelian` ADD CONSTRAINT `pembelian_Product ID_fkey` FOREIGN KEY (`Product ID`) REFERENCES `product`(`Product ID`) ON DELETE RESTRICT ON UPDATE CASCADE;
